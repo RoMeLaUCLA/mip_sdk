@@ -6,8 +6,6 @@
 #include <string>
 
 
-extern mip::Timestamp getCurrentTimestamp();
-
 namespace mip
 {
 namespace platform
@@ -22,6 +20,7 @@ public:
 
     bool recvFromDevice(uint8_t* buffer, size_t max_length, size_t* length_out, mip::Timestamp* timestamp) final;
     bool sendToDevice(const uint8_t* data, size_t length) final;
+    mip::Timestamp getCurrentTimestamp();
 
 private:
     serial_port mPort;

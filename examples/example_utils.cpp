@@ -10,11 +10,7 @@
     #define PORT_KEY "/dev/"
 #endif
 
-mip::Timestamp getCurrentTimestamp()
-{
-    using namespace std::chrono;
-    return duration_cast<milliseconds>( steady_clock::now().time_since_epoch() ).count();
-}
+
 
 
 std::unique_ptr<ExampleUtils> openFromArgs(const std::string& port_or_hostname, const std::string& baud_or_port)
