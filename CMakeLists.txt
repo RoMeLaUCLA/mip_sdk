@@ -176,7 +176,7 @@ if(MIP_DISABLE_CPP)
 endif()
 
 
-add_library(mip ${ALL_MIP_SOURCES})
+add_library(mip SHARED ${ALL_MIP_SOURCES})
 
 
 if(${MIP_TIMESTAMP_TYPE})
@@ -211,7 +211,7 @@ endif()
 # EXAMPLES
 #
 
-option(BUILD_EXAMPLES "Builds the example programs." ON)
+option(BUILD_EXAMPLES "Builds the example programs." OFF)
 
 if(BUILD_EXAMPLES)
     add_subdirectory("examples")
@@ -297,29 +297,26 @@ write_basic_package_version_file(
 install(DIRECTORY
     "${SRC_DIR}/mip"
     DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}"
-    COMPONENT mip
     FILES_MATCHING PATTERN "*.h*"
 )
 install(TARGETS
     mip
     EXPORT mip-targets
-    ARCHIVE
-    COMPONENT mip
-    DESTINATION "${CMAKE_INSTALL_LIBDIR}/"
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 )
 
-install(EXPORT
-    mip-targets
-    COMPONENT mip
+install(EXPORT mip-targets
+    FILE "mip-targets.cmake"
     DESTINATION "${CONFIG_EXPORT_DIR}"
 )
 
 install(FILES
     "${CMAKE_BINARY_DIR}/mip-config.cmake"
     "${CMAKE_BINARY_DIR}/mip-config-version.cmake"
-    COMPONENT mip
     DESTINATION "${CONFIG_EXPORT_DIR}"
 )
+export(PACKAGE mip)
 
 # Try to determine what architecture we are building for based on the compiler output
 if(MSVC)

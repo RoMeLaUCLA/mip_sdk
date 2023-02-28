@@ -32,5 +32,11 @@ bool SerialConnection::sendToDevice(const uint8_t* data, size_t length)
     return serial_port_write(&mPort, data, length, &length_out);
 }
 
+mip::Timestamp SerialConnection::getCurrentTimestamp()
+{
+    using namespace std::chrono;
+    return duration_cast<milliseconds>( steady_clock::now().time_since_epoch() ).count();
+}
+
 };  // namespace platform
 };  // namespace mip

@@ -33,5 +33,11 @@ bool TcpConnection::sendToDevice(const uint8_t* data, size_t length)
     return tcp_socket_send(&mSocket, data, length, &length_out);
 }
 
+mip::Timestamp TcpConnection::getCurrentTimestamp()
+{
+    using namespace std::chrono;
+    return duration_cast<milliseconds>( steady_clock::now().time_since_epoch() ).count();
+}
+
 };  // namespace platform
 };  // namespace mip
